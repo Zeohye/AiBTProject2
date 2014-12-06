@@ -5,7 +5,9 @@ import java.util.Arrays;
  */
 public class Util {
     public static int max(int... numbers){
-        return Arrays.stream(numbers).max().getAsInt();
+        Arrays.sort(numbers);
+        return numbers[numbers.length-1];
+        //return Arrays.stream(numbers).max().getAsInt();
     }
 
     public static void printMatrix(int[][] m){

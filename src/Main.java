@@ -8,7 +8,11 @@ public class Main {
     public static void main(String[] args) throws IOException {
         List<String> list = FASTAParser.parse("testdata/testseqs.fasta");
         NussinovAlgorithms na = new NussinovAlgorithms();
-        na.nussinovSingle(list.get(0));
+        //na.nussinovSingle(list.get(0));
+        for(String s : list) {
+            na.nussinovSingle(s);
+            System.out.println();
+        }
 
     }
 

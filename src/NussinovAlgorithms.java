@@ -12,18 +12,62 @@ public class NussinovAlgorithms {
         }
         matrix[0][rna.length() - 1] = score(matrix,rna,0,rna.length() - 1);
 
-        Util.printMatrix(matrix);
+        //Util.printMatrix(matrix);
+
+        System.out.println(backTrack(matrix,0,matrix[0].length-1,rna));
     }
 
-    private int backTrack(){
+    private String backTrack(int[][] score,int i,int j,String rna){
+        int lastValue=score[i][j];
+        int size = j-i+1;
+        int v1,v2,v3,v4=0;
+        String retl = "";
+        String retr = "";
+        while (lastValue != 0){
+            v1 = score[i+1][j];
+            v2 = score[i][j-1];
+            v3 = score[i+1][j-1];
 
-        return 0;
+
+            if(lastValue == v1){
+                retl = retl+".";
+                i++;
+            }else if(lastValue == v2){
+                retr = "."+retr;
+                j--;
+            }else if(lastValue == v3+1){
+                retr = ")"+retr;
+                retl += "(";
+
+                lastValue = v3;
+                j--;
+                i++;
+            }else {
+                for(int k = i+1; k < j-1; k++){
+                    if(isPair(rna.charAt(i),rna.charAt(k))) {
+                        v4 = score[i+1][k-1] + score[k+1][j]+1;
+                        if (lastValue == v4) {
+                            retl += backTrack(score, i, k - 1, rna);
+                            retr = backTrack(score, k, j, rna) + retr;
+                            return retl + retr;
+                        }
+                    }
+                }
+            }
+        }
+        if(size != retl.length()+retr.length())
+            for(int k=retl.length()+retr.length(); k<size;k++)
+                retl += ".";
+        return retl+retr;
     }
 
     /**
      * @precondition the array is populated with the necessary values for the calculation.
      */
     private int score(int[][] matrix, String rna, int i, int j){
+        if(j-i<2)
+            return 0;
+
         int v1,v2,v3,v4 = Integer.MIN_VALUE;
         v1 = v2 = v3 = v4;
 
@@ -33,8 +77,9 @@ public class NussinovAlgorithms {
         v2 = matrix[i+1][j];
         v3 = matrix[i][j-1];
 
-        for(int k = i+1; k < j; k++){
-            v4 = Util.max(matrix[i][k] + matrix[k+1][j], v4);
+        for(int k = i+1; k < j-1; k++){
+            if(isPair(rna.charAt(i),rna.charAt(k)))
+                v4 = Util.max(matrix[i][k] + matrix[k+1][j], v4);
         }
 
         return Util.max(v1,v2,v3,v4);
