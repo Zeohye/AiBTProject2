@@ -7,8 +7,8 @@ import java.util.List;
  */
 public class Main {
     public static void main(String[] args) throws IOException {
-        List<String> list = FASTAParser.parse("testdata/testseqs.fasta");
-        List<String> listNames = FASTAParser.parseNames("testdata/testseqs.fasta");
+        List<String> list = FASTAParser.parse("input/15seqs.fasta");
+        List<String> listNames = FASTAParser.parseNames("input/15seqs.fasta");
 
         NussinovAlgorithms na = new NussinovAlgorithms();
         //na.nussinovSingle(list.get(0));
