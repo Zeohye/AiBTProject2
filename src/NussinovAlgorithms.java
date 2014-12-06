@@ -2,7 +2,7 @@
  * Created by JJ on 04-12-2014.
  */
 public class NussinovAlgorithms {
-    public void nussinovSingle(String rna){
+    public String nussinovSingle(String rna){
         int[][] matrix = new int[rna.length()][rna.length()]; //everything is 0;
         int count = 0;
         for(int i = 0; i < rna.length() - 2; i++){
@@ -14,7 +14,7 @@ public class NussinovAlgorithms {
 
         //Util.printMatrix(matrix);
 
-        System.out.println(backTrack(matrix,0,matrix[0].length-1,rna));
+        return backTrack(matrix,0,matrix[0].length-1,rna);
     }
 
     private String backTrack(int[][] score,int i,int j,String rna){

@@ -30,4 +30,18 @@ public class FASTAParser {
 
         return sequences;
     }
+
+    public static List<String> parseNames(String path) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader(path));
+        String line;
+
+        ArrayList<String> sequences = new ArrayList<String>();
+
+        while ((line = br.readLine())!= null)
+            if(line.charAt(0)=='>')
+                    sequences.add(line);
+        if(br != null)br.close();
+
+        return sequences;
+    }
 }
