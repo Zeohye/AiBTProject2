@@ -4,7 +4,6 @@
 public class NussinovAlgorithms {
     public String nussinovSingle(String rna){
         int[][] matrix = new int[rna.length()][rna.length()]; //everything is 0;
-        int count = 0;
         for(int i = 0; i < rna.length() - 2; i++){
             for(int j = 0; j < rna.length() - i - 1; j++){
                 matrix[j][j + i +1] = score(matrix, rna, j, j + i + 1);
@@ -14,10 +13,10 @@ public class NussinovAlgorithms {
 
        // Util.printMatrix(matrix);
 
-        return backTrack(matrix,0,matrix[0].length-1,rna);
+        return backTrack(matrix,0,matrix[0].length-1);
     }
 
-    private String backTrack(int[][] score,int i,int j,String rna){
+    private String backTrack(int[][] score,int i,int j){
         int lastValue=score[i][j];
         int size = j-i+1;
         int v1,v2,v3,v4=0;
@@ -46,8 +45,8 @@ public class NussinovAlgorithms {
                 for(int k = i+1; k < j-1; k++){
                         v4 = score[i][k] + score[k+1][j];
                         if (lastValue == v4) {
-                            retl += backTrack(score, i, k, rna);
-                            retr = backTrack(score, k+1, j, rna) + retr;
+                            retl += backTrack(score, i, k);
+                            retr = backTrack(score, k+1, j) + retr;
                             return retl + retr;
                         }
                 }
