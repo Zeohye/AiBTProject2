@@ -7,11 +7,11 @@ import java.util.List;
  */
 public class Main {
     public static void main(String[] args) throws IOException {
-        List<String> list = FASTAParser.parse("input/15seqs.fasta");
-        List<String> listNames = FASTAParser.parseNames("input/15seqs.fasta");
+        List<String> list = FASTAParser.parse("testdata/testseqs.fasta");
+        List<String> listNames = FASTAParser.parseNames("testdata/testseqs.fasta");
 
         NussinovAlgorithms na = new NussinovAlgorithms();
-        //na.nussinovSingle(list.get(0));
+        //System.out.println(na.nussinovSingle(list.get(0)));
         PrintWriter writer = new PrintWriter("output/nussinov_single.dbn", "UTF-8");
         for(int i = 0; i<list.size();i++){
             writer.println(listNames.get(i));

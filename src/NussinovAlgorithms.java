@@ -12,7 +12,7 @@ public class NussinovAlgorithms {
         }
         matrix[0][rna.length() - 1] = score(matrix,rna,0,rna.length() - 1);
 
-        //Util.printMatrix(matrix);
+       // Util.printMatrix(matrix);
 
         return backTrack(matrix,0,matrix[0].length-1,rna);
     }
@@ -44,14 +44,12 @@ public class NussinovAlgorithms {
                 i++;
             }else {
                 for(int k = i+1; k < j-1; k++){
-                    if(isPair(rna.charAt(i),rna.charAt(k))) {
-                        v4 = score[i+1][k-1] + score[k+1][j]+1;
+                        v4 = score[i][k] + score[k+1][j];
                         if (lastValue == v4) {
-                            retl += backTrack(score, i, k - 1, rna);
-                            retr = backTrack(score, k, j, rna) + retr;
+                            retl += backTrack(score, i, k, rna);
+                            retr = backTrack(score, k+1, j, rna) + retr;
                             return retl + retr;
                         }
-                    }
                 }
             }
         }
@@ -77,9 +75,8 @@ public class NussinovAlgorithms {
         v2 = matrix[i+1][j];
         v3 = matrix[i][j-1];
 
-        for(int k = i+1; k < j-1; k++){
-            if(isPair(rna.charAt(i),rna.charAt(k)))
-                v4 = Util.max(matrix[i][k] + matrix[k+1][j], v4);
+        for (int k = i+1; k < j-1; k++){
+            v4 = Util.max(matrix[i][k] + matrix[k+1][j], v4);
         }
 
         return Util.max(v1,v2,v3,v4);
