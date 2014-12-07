@@ -8,8 +8,8 @@ import java.util.List;
  */
 public class Main {
     public static void main(String[] args) throws IOException {
-        List<String> list = FASTAParser.parse("testdata/testseqs.fasta");
-        List<String> listNames = FASTAParser.parseNames("testdata/testseqs.fasta");
+        List<String> list = FASTAParser.parse("input/15seqs.fasta");
+        List<String> listNames = FASTAParser.parseNames("input/15seqs.fasta");
 
         NussinovAlgorithms na = new NussinovAlgorithms();
         //System.out.println(na.nussinovSingle(list.get(0)));
@@ -21,8 +21,8 @@ public class Main {
         }
         writer.close();
 
-        list = FASTAParser.parse("testdata/testseqs_aligned.fasta");
-        listNames = FASTAParser.parseNames("testdata/testseqs_aligned.fasta");
+        list = FASTAParser.parse("input/15seqs_aligned.fasta");
+        listNames = FASTAParser.parseNames("input/15seqs_aligned.fasta");
 
         /*list.clear();
         list.add("GUCUGGAC");
@@ -33,16 +33,16 @@ public class Main {
         writer = new PrintWriter("output/nussinov_multi.dbn", "UTF-8");
         for(int i = 0; i<multi.size();i++){
             writer.println(listNames.get(i));
-            writer.println(list.get(i).replace("-",""));
+            writer.println(list.get(i).replace("-", ""));
             writer.println(multi.get(i));
         }
         writer.close();
 
 
-        List<String> listSingle = FASTAParser.parse("testdata/testseqs.fasta");
-        List<String> listMultiple = FASTAParser.parse("testdata/testseqs_aligned.fasta");;
-        listNames = FASTAParser.parseNames("testdata/testseqs.fasta");
-        List<String> trueVernaList = FASTAParser.parse("testdata/testseqs_nussinov_multiple_pred.txt");
+        List<String> listSingle = FASTAParser.parse("input/15seqs.fasta");
+        List<String> listMultiple = FASTAParser.parse("input/15seqs_aligned.fasta");;
+        listNames = FASTAParser.parseNames("input/15seqs.fasta");
+        List<String> trueVernaList = FASTAParser.parse("input/15seqs_true_structure_alignment.txt");
 
         List<String> mccTable = MCC.createMCCTable(trueVernaList.get(0),listNames,listSingle,listMultiple);
         for(String s : mccTable){
