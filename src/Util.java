@@ -49,4 +49,29 @@ public class Util {
 
         }catch(Exception e){System.out.println("Matrix is empty!!");}
     }
+
+    public static int getExp(String data,int index,boolean forward) {
+        if (forward) {
+            int level = 1;
+            int length = data.length();
+            char ch = ' ';
+            while (level > 0 && length - 1 >= index) {
+                ch = data.charAt(index);
+                if (ch == '(') level++;
+                else if (ch == ')') level--;
+                index++;
+            }
+            return index - 1;
+        } else {
+            int level = 1;
+            char ch = ' ';
+            while (level > 0 && index >= 0) {
+                ch = data.charAt(index);
+                if (ch == ')') level++;
+                else if (ch == '(') level--;
+                index--;
+            }
+            return index + 1;
+        }
+    }
 }
