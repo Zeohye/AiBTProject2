@@ -19,6 +19,14 @@ public class Main {
             writer.println(na.nussinovSingle(list.get(i)));
         }
         writer.close();
+
+        //list = FASTAParser.parse("testdata/testseqs_aligned.fasta");
+        list.clear();
+        list.add("GUCUGGAC");
+        list.add("GACUUGGC");
+        list.add("GGCYGGCC");
+        list.add("GCCUGGGC");
+        na.nussinovMulti(list);
     }
 
 }

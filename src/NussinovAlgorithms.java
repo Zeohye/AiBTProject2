@@ -1,9 +1,12 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by JJ on 04-12-2014.
  */
 public class NussinovAlgorithms {
     public String nussinovSingle(String rna){
-        int[][] matrix = new int[rna.length()][rna.length()]; //everything is 0;
+        double[][] matrix = new double[rna.length()][rna.length()]; //everything is 0;
         for(int i = 0; i < rna.length() - 2; i++){
             for(int j = 0; j < rna.length() - i - 1; j++){
                 matrix[j][j + i +1] = score(matrix, rna, j, j + i + 1);
@@ -16,10 +19,51 @@ public class NussinovAlgorithms {
         return backTrack(matrix,0,matrix[0].length-1);
     }
 
-    private String backTrack(int[][] score,int i,int j){
-        int lastValue=score[i][j];
+
+    public String nussinovMulti(List<String> rnas){
+        double[][] mij = mutualInformation(rnas);
+
+        Util.printMatrix(mij);
+
+        return "";
+    }
+
+    public double[][] mutualInformation(List<String> rnas){
+        double[][] matrix = new double[rnas.get(0).length()][rnas.get(0).length()]; //everything is 0;
+        char[] chars = {'A','C','G','U','-'};
+        double size = rnas.size();
+        for(int i=0; i<rnas.get(0).length();i++){
+            for(int j=rnas.get(0).length()-1; j>i;j--) {
+                double value = 0;
+                for(char c : chars){
+                    double fxi=0;
+                    double fxj=0;
+                    double fxixjPair=0;
+                    for (String s : rnas) {
+                        if(s.charAt(i)==c)
+                            fxi++;
+                        if(s.charAt(j)==c)
+                            fxj++;
+                        if((s.charAt(i)==c || s.charAt(j)==c) && isPair(s.charAt(i),s.charAt(j)))
+                            fxixjPair++;
+                    }
+                    if(fxixjPair !=0 && fxi!=0 && fxj!=0)
+                        value +=(fxixjPair/size)*log2((fxixjPair/size)/((fxi/size)*(fxj/size)));
+                }
+                matrix[i][j] = value;
+            }
+        }
+        return matrix;
+    }
+
+    private double log2(double i) {
+        return Math.log(i)/Math.log(2);
+    }
+
+    private String backTrack(double[][] score,int i,int j){
+        double lastValue=score[i][j];
         int size = j-i+1;
-        int v1,v2,v3,v4=0;
+        double v1,v2,v3,v4=0;
         String retl = "";
         String retr = "";
         while (lastValue != 0){
@@ -61,11 +105,11 @@ public class NussinovAlgorithms {
     /**
      * @precondition the array is populated with the necessary values for the calculation.
      */
-    private int score(int[][] matrix, String rna, int i, int j){
+    private double score(double[][] matrix, String rna, int i, int j){
         if(j-i<2)
             return 0;
 
-        int v1,v2,v3,v4 = Integer.MIN_VALUE;
+        double v1,v2,v3,v4 = Integer.MIN_VALUE;
         v1 = v2 = v3 = v4;
 
         if(isPair(rna.charAt(i),rna.charAt(j)))
@@ -93,4 +137,5 @@ public class NussinovAlgorithms {
 
         return false;
     }
+
 }
