@@ -39,7 +39,7 @@ public class MCC {
         List<String> table = new ArrayList<String>();
 
         for (int i = 0; i < names.size(); i++){
-            table.add(names.get(i) + "\t" + mcc(resultTrue.get(i),resultSingle.get(i)) + "\t" + Util.round(mcc(resultTrue.get(i), resultMultiple.get(i)),2));
+            table.add(names.get(i) + "\t\t" + Util.round(mcc(resultTrue.get(i), resultSingle.get(i)),2) + "\t" + Util.round(mcc(resultTrue.get(i), resultMultiple.get(i)), 2));
         }
 
         return table;

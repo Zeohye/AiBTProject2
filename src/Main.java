@@ -39,8 +39,8 @@ public class Main {
         writer.close();
 
 
-        List<String> listSingle = FASTAParser.parse("testdata/testseqs_aligned.fasta");
-        List<String> listMultiple = listSingle;
+        List<String> listSingle = FASTAParser.parse("testdata/testseqs.fasta");
+        List<String> listMultiple = FASTAParser.parse("testdata/testseqs_aligned.fasta");;
         listNames = FASTAParser.parseNames("testdata/testseqs.fasta");
         List<String> trueVernaList = FASTAParser.parse("testdata/testseqs_nussinov_multiple_pred.txt");
 
@@ -52,7 +52,7 @@ public class Main {
 
 
         //find true structure
-        List<String> resultTrue = na.findTrueStructure(multi,trueVernaList.get(0));
+        List<String> resultTrue = na.findTrueStructure(listMultiple,trueVernaList.get(0));
 
         writer = new PrintWriter("output/nussinov_true.dbn", "UTF-8");
         for(int i = 0; i<resultTrue.size();i++){
