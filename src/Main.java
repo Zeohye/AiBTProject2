@@ -45,7 +45,9 @@ public class Main {
         List<String> trueVernaList = FASTAParser.parse("testdata/testseqs_nussinov_multiple_pred.txt");
 
         List<String> mccTable = MCC.createMCCTable(trueVernaList.get(0),listNames,listSingle,listMultiple);
-        //print table
+        for(String s : mccTable){
+            System.out.println(s);
+        }
 
 
 
