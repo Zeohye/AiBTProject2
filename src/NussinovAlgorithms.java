@@ -23,18 +23,31 @@ public class NussinovAlgorithms {
     }
 
 
-    public ArrayList<String> nussinovMulti(List<String> rnas){
+    public List<String> nussinovMulti(List<String> rnas){
         double[][] mij = mutualInformation(rnas);
         ArrayList<String> result= new ArrayList<String>();
         for(String s : rnas)
             result.add(nussinovSingle(s, mij));
-        //Refine???? how?
 
-        //Convert from alignment to seq. by removing () at gaps
+        //refine?
+
+        return gapRemoval(result, rnas);
+    }
+
+    public List<String> findTrueStructure(List<String> aligned, String trueVerna){
+        List<String> trueList = new ArrayList<String>();
+        for(String s : aligned){
+            trueList.add(trueVerna);
+        }
+
+        return gapRemoval(trueList,aligned);
+    }
+
+    public List<String> gapRemoval(List<String> verna, List<String> aligned){
         ArrayList<String> res= new ArrayList<String>();
-        for(int i=0; i<rnas.size();i++){
-            String s = rnas.get(i);
-            String r = result.get(i);
+        for(int i=0; i<aligned.size();i++){
+            String s = aligned.get(i);
+            String r = verna.get(i);
             while(s.contains("-")) {
                 int index = s.indexOf('-');
                 if(r.charAt(index)=='(') {
@@ -55,13 +68,23 @@ public class NussinovAlgorithms {
                         s=s.substring(1);
                         r=r.substring(1);
                     }else {
-                        s = s.substring(0, index - 1) + s.substring(index);
-                        r = r.substring(0, index - 1) + r.substring(index);
+                        s = s.substring(0, index) + s.substring(index + 1);
+                        r = r.substring(0, index) + r.substring(index + 1);
                     }
                 }
             }
             res.add(r);
         }
+
+        /*
+        for(int i = 0; i < res.size(); i++){
+            System.out.println("Printing out number: " + i);
+            System.out.println(aligned.get(i));
+            System.out.println(verna.get(i));
+            System.out.println(res.get(i));
+            System.out.println();
+        }*/
+
 
         return res;
     }
@@ -168,7 +191,7 @@ public class NussinovAlgorithms {
     }
 
     private boolean isPair(char a, char b){
-        if(a=='-' && b !='-' ||a!='-' && b =='-')
+        if(a=='-' && b !='-' || a!='-' && b =='-')
             return true;
 
         if((a == 'A' && b == 'U') || (a == 'U' && b == 'A'))

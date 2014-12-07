@@ -1,3 +1,5 @@
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 
 /**
@@ -13,6 +15,14 @@ public class Util {
         Arrays.sort(numbers);
         return numbers[numbers.length-1];
         //return Arrays.stream(numbers).max().getAsInt();
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 
     public static void printMatrix(int[][] m){

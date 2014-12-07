@@ -29,7 +29,7 @@ public class Main {
         list.add("GACUGGUC");
         list.add("GGCYGGCC");
        // list.add("GCCUGGGC");*/
-        ArrayList<String> multi =  na.nussinovMulti(list);
+        List<String> multi =  na.nussinovMulti(list);
         writer = new PrintWriter("output/nussinov_multi.dbn", "UTF-8");
         for(int i = 0; i<multi.size();i++){
             writer.println(listNames.get(i));
@@ -37,6 +37,29 @@ public class Main {
             writer.println(multi.get(i));
         }
         writer.close();
+
+
+        List<String> listSingle = FASTAParser.parse("testdata/testseqs_aligned.fasta");
+        List<String> listMultiple = listSingle;
+        listNames = FASTAParser.parseNames("testdata/testseqs.fasta");
+        List<String> trueVernaList = FASTAParser.parse("testdata/testseqs_nussinov_multiple_pred.txt");
+
+        List<String> mccTable = MCC.createMCCTable(trueVernaList.get(0),listNames,listSingle,listMultiple);
+        //print table
+
+
+
+        //find true structure
+        List<String> resultTrue = na.findTrueStructure(multi,trueVernaList.get(0));
+
+        writer = new PrintWriter("output/nussinov_true.dbn", "UTF-8");
+        for(int i = 0; i<resultTrue.size();i++){
+            writer.println(listNames.get(i));
+            writer.println(list.get(i).replace("-",""));
+            writer.println(resultTrue.get(i));
+        }
+        writer.close();
+
     }
 
 }
